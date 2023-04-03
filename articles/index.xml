@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Articles on </title>
+    <link>/articles/</link>
+    <description>Recent content in Articles on </description>
+    <generator>Hugo -- gohugo.io</generator><atom:link href="/articles/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>modelsim独立仿真</title>
+      <link>/articles/modelsim%E4%BB%BF%E7%9C%9F%E5%B9%B3%E5%8F%B0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/articles/modelsim%E4%BB%BF%E7%9C%9F%E5%B9%B3%E5%8F%B0/</guid>
+      <description>modelsim 仿真环境搭建 一、软件下载 modelsim 2020.1+vivado 2021.2 环境搭建在此不做说明
+要注意，十分注意软件的配套问题!在amd官网可以看到不同版本的vivado支持的三方仿真版本是什么。
+直接搜vivado suit 在UG973里面可以看到各个版本对应的，我最开始随便下的modelsim 10.4编译vivado 2021的时候就不断报错。
+指路：modelsim破解教程
+二、编译xilinx相关的库 以及调用 主要仿真难点就在于，怎么在modelsim中调用xilinx给提供的ip核。所以需要对其中的核进行编译，让modelsim可以调用。在这里有很多坑：
+1、版本对应问题 我使用modelsim 2020.1+vivado 2021.2 ，具体对应支持去amd官网上找一下。
+2、环境变量的设置 在对modelsim进行破解以后，设置两个环境变量。
+分别是用户变量：
+MODELSIM 对应地址是modelsim.ini文件所在位置
+系统变量：
+MGLS_LICENSE_FILE 对应位置是LICENSE.TXT破解文件位置。
+3、ini文件的只读属性要进行修改，同时不要修改voltflow=1这个命令，新版的modelsim已经有所改正 3、把生成的库永久的调用在modelsim软件中 启动软件后，下方library栏可以看到，一些支持的库和ip，我们需要把生成的新的ip配置到modelsim中，让每次打开都能看到xilinx内的所有核。
+指路：modelsim调库教程
+三、搭配使用 有两种方式：
+1、在vivado内搭建工程，并且调用modelsim的仿真引擎。使用更方便，和在vivado内仿真内没有太大差别。但是效果一般。
+2、使用modelsim独立仿真，在modelsim里面搭建工程，调用v文件，在没有用ip核的时候也很方便，但是使用到xilinx的ip就比较复杂。不过可以使用脚本语言加快进程。本文将用第二种方式。
+四、在modelsim中独立仿真 依然是在vivado内写好模块代码，激励文件，同时可以看RTL级电路实现结果。在modelsim中新建工程，新建工作库work，并且把所有的代码都add到工作区内。
+在project栏里，右键V代码，选择compile all,进行编译，这个时候就可以看到编译结果有没有问题。编译通过后选择library栏，打开work库，选择tb文件，右键simulate，可以看到module仿真后的结果，再次右键add wave就可以调试啦。
+每次有代码更改后，都需要重新编译,restart一下，然后再次仿真。
+指路：西交的modelsim简易使用教程
+五、do语言脚本（未完待续 </description>
+    </item>
+    
+    <item>
+      <title>verilog仿真遇见的各类问题</title>
+      <link>/articles/%E9%81%87%E8%A7%81%E7%9A%84%E5%90%84%E7%B1%BB%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/articles/%E9%81%87%E8%A7%81%E7%9A%84%E5%90%84%E7%B1%BB%E9%97%AE%E9%A2%98/</guid>
+      <description>verilog仿真遇见的各类问题 一、模块赋值 A,B,C三个模块，A为顶层模块，其中例化了BC，A的输出和C的输出相同（都是spi四通信线），在仿真的时候可以看到C模块内部信号是正确的，但是在A模块中，看到A的输出却不对。
+module top ( input clk, input reset_n, input sdout, //spi interface define output sclk_out, output cs_out, output sdin ); //在模块内例化的子模块 spi_interface u_spi_interface( .clk (clk), // .sys_clk (sys_clk), .reset_n (reset_n), .sdout (sdout), //spi interface define .sclk_out (sclk_out), .cs_out (cs_out), .sdin (sdin), .spi_addr (spi_addr ), .spi_wdata(spi_wdata), .spi_mode (spi_mode ), .spi_rdata(spi_rdata), .spi_state_flag(spi_state_flag) ); 可以看到仿真结果中，spi_interface内的信号都是正确得，但是top模块下的输入却不对，定义信号的时候是直连的。
+问了一下chatgpt&amp;hellip;
+&amp;ldquo;如果 C 模块的输出信号和 A 模块的输出端口没有同步，那么当 A 模块读取 C 模块的输出时，可能会读取到未定义的值。为了解决这个问题，您可以使用时序约束和同步技术来确保信号的正确性。&amp;rdquo;
+所以更新了代码，引入了一个reg对数据进行一步的赋值
+module top ( input clk, input reset_n, input sdout, //spi interface define output reg sclk_o, output reg cs_o, output reg sdin_i ); spi_interface u_spi_interface( .</description>
+    </item>
+    
+    <item>
+      <title>对Charlola的感谢支持</title>
+      <link>/articles/article/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/articles/article/</guid>
+      <description>对demo作者的支持，谢谢charlola
+Thank you for your support! Hello. If you like this template, I&amp;rsquo;d be happy to get a coffee donation :)</description>
+    </item>
+    
+  </channel>
+</rss>

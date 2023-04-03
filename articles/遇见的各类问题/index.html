@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>verilog仿真遇见的各类问题 | </title>
+<meta name="keywords" content="" />
+<meta name="description" content="问题集锦">
+<meta name="author" content="LindaYeyeye">
+<link rel="canonical" href="/articles/%E9%81%87%E8%A7%81%E7%9A%84%E5%90%84%E7%B1%BB%E9%97%AE%E9%A2%98/" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.7bfe087ae72df31787ec7a1360dd05ee246a179b51cf7a30a904b39d7f813b69.css" integrity="sha256-e/4Ieuct8xeH7HoTYN0F7iRqF5tRz3owqQSznX&#43;BO2k=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.b95bacdc39e37a332a9f883b1e78be4abc1fdca2bc1f2641f55e3cd3dabd4d61.js" integrity="sha256-uVus3DnjejMqn4g7Hni&#43;Srwf3KK8HyZB9V4809q9TWE="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="/images/favicon.icon">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="mask-icon" href="/images/apple-touch-icon.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/" title="Home"><span>Home</span></a>
+            </li>
+            <li>
+                <a href="/projects/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="/articles/" title="Articles">
+                    <span>Articles</span>
+                </a>
+            </li>
+            <li>
+                <a href="/contact/" title="Contact">
+                    <span>Contact</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="">Home</a>&nbsp;»&nbsp;<a href="/articles/">Articles</a></div>
+    <h1 class="post-title">
+      verilog仿真遇见的各类问题
+    </h1>
+    <div class="post-description">
+      问题集锦
+    </div>
+    <div class="post-meta">1 min&nbsp;·&nbsp;LindaYeyeye</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#verilog%e4%bb%bf%e7%9c%9f%e9%81%87%e8%a7%81%e7%9a%84%e5%90%84%e7%b1%bb%e9%97%ae%e9%a2%98" aria-label="verilog仿真遇见的各类问题">verilog仿真遇见的各类问题</a><ul>
+                        
+                <li>
+                    <a href="#%e4%b8%80%e6%a8%a1%e5%9d%97%e8%b5%8b%e5%80%bc" aria-label="一、模块赋值">一、模块赋值</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content">
+  <h2 id="verilog仿真遇见的各类问题">verilog仿真遇见的各类问题</h2>
+<h3 id="一模块赋值">一、模块赋值</h3>
+<p>A,B,C三个模块，A为顶层模块，其中例化了BC，A的输出和C的输出相同（都是spi四通信线），在仿真的时候可以看到C模块内部信号是正确的，但是在A模块中，看到A的输出却不对。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-verilog" data-lang="verilog"><span style="display:flex;"><span><span style="color:#66d9ef">module</span> top (
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">input</span>                clk,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">input</span>                reset_n,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">input</span>                    sdout,    <span style="color:#75715e">//spi interface define
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">output</span>                   sclk_out,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">output</span>                   cs_out,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">output</span>                   sdin 
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//在模块内例化的子模块
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>spi_interface u_spi_interface(
+</span></span><span style="display:flex;"><span>    .clk      (clk), 
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// .sys_clk  (sys_clk),    
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    .reset_n  (reset_n),  
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    .sdout    (sdout),    <span style="color:#75715e">//spi interface define
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    .sclk_out (sclk_out), 
+</span></span><span style="display:flex;"><span>    .cs_out   (cs_out),   
+</span></span><span style="display:flex;"><span>    .sdin     (sdin),  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    .spi_addr (spi_addr ),
+</span></span><span style="display:flex;"><span>    .spi_wdata(spi_wdata),
+</span></span><span style="display:flex;"><span>    .spi_mode (spi_mode  ),
+</span></span><span style="display:flex;"><span>    .spi_rdata(spi_rdata),
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>     .spi_state_flag(spi_state_flag)
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><p>可以看到仿真结果中，spi_interface内的信号都是正确得，但是top模块下的输入却不对，定义信号的时候是直连的。</p>
+<figure><img src="/images/modelsim%e4%bb%bf%e7%9c%9f1.png"/>
+</figure>
+
+<p>问了一下chatgpt&hellip;</p>
+<p>&ldquo;如果 C 模块的输出信号和 A 模块的输出端口没有同步，那么当 A 模块读取 C 模块的输出时，可能会读取到未定义的值。为了解决这个问题，您可以使用时序约束和同步技术来确保信号的正确性。&rdquo;</p>
+<p>所以更新了代码，引入了一个reg对数据进行一步的赋值</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-verilog" data-lang="verilog"><span style="display:flex;"><span><span style="color:#66d9ef">module</span> top (
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">input</span>                clk,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">input</span>                reset_n,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">input</span>                    sdout,    <span style="color:#75715e">//spi interface define
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">output</span>       <span style="color:#66d9ef">reg</span>         sclk_o,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">output</span>       <span style="color:#66d9ef">reg</span>         cs_o,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">output</span>       <span style="color:#66d9ef">reg</span>         sdin_i
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>spi_interface u_spi_interface(
+</span></span><span style="display:flex;"><span>    .sclk_out (sclk_out), 
+</span></span><span style="display:flex;"><span>    .cs_out   (cs_out),   
+</span></span><span style="display:flex;"><span>    .sdin     (sdin)
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">always</span> @(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">begin</span>
+</span></span><span style="display:flex;"><span>    sclk_o<span style="color:#f92672">&lt;=</span>sclk_out  ;
+</span></span><span style="display:flex;"><span>    cs_o<span style="color:#f92672">&lt;=</span>cs_out;
+</span></span><span style="display:flex;"><span>    sdin_i<span style="color:#f92672">&lt;=</span>sdin; 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><figure><img src="/images/modelsim%e4%bb%bf%e7%9c%9f2.png"/>
+</figure>
+
+<p>这个时候可以看到仿真的结果已经可以正确赋值了，没有出现X不定态。</p>
+
+  </div>
+
+  <footer class="post-footer">
+
+<div class="share-buttons">
+
+    <a target="_blank" rel="noopener noreferrer" aria-label="share verilog仿真遇见的各类问题 on linkedin"
+        href="https://www.linkedin.com/in/heycharlola/">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+        </svg>
+    </a>
+</div>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span> built with ♥ from charlola
+      
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = 'copy';
+
+        function copyingDone() {
+            copybutton.innerText = 'copied!';
+            setTimeout(() => {
+                copybutton.innerText = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

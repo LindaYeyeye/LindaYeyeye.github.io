@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>modelsim独立仿真 | </title>
+<meta name="keywords" content="" />
+<meta name="description" content="modelsim搭建环境与使用">
+<meta name="author" content="LindaYeyeye">
+<link rel="canonical" href="/articles/modelsim%E4%BB%BF%E7%9C%9F%E5%B9%B3%E5%8F%B0/" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.7bfe087ae72df31787ec7a1360dd05ee246a179b51cf7a30a904b39d7f813b69.css" integrity="sha256-e/4Ieuct8xeH7HoTYN0F7iRqF5tRz3owqQSznX&#43;BO2k=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.b95bacdc39e37a332a9f883b1e78be4abc1fdca2bc1f2641f55e3cd3dabd4d61.js" integrity="sha256-uVus3DnjejMqn4g7Hni&#43;Srwf3KK8HyZB9V4809q9TWE="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="/images/favicon.icon">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="mask-icon" href="/images/apple-touch-icon.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/" title="Home"><span>Home</span></a>
+            </li>
+            <li>
+                <a href="/projects/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="/articles/" title="Articles">
+                    <span>Articles</span>
+                </a>
+            </li>
+            <li>
+                <a href="/contact/" title="Contact">
+                    <span>Contact</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="">Home</a>&nbsp;»&nbsp;<a href="/articles/">Articles</a></div>
+    <h1 class="post-title">
+      modelsim独立仿真
+    </h1>
+    <div class="post-description">
+      modelsim搭建环境与使用
+    </div>
+    <div class="post-meta">1 min&nbsp;·&nbsp;LindaYeyeye</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#modelsim-%e4%bb%bf%e7%9c%9f%e7%8e%af%e5%a2%83%e6%90%ad%e5%bb%ba" aria-label="modelsim 仿真环境搭建">modelsim 仿真环境搭建</a><ul>
+                        
+                <li>
+                    <a href="#%e4%b8%80%e8%bd%af%e4%bb%b6%e4%b8%8b%e8%bd%bd" aria-label="一、软件下载">一、软件下载</a></li>
+                <li>
+                    <a href="#%e4%ba%8c%e7%bc%96%e8%af%91xilinx%e7%9b%b8%e5%85%b3%e7%9a%84%e5%ba%93-%e4%bb%a5%e5%8f%8a%e8%b0%83%e7%94%a8" aria-label="二、编译xilinx相关的库 以及调用">二、编译xilinx相关的库 以及调用</a><ul>
+                        
+                <li>
+                    <a href="#1%e7%89%88%e6%9c%ac%e5%af%b9%e5%ba%94%e9%97%ae%e9%a2%98" aria-label="1、版本对应问题">1、版本对应问题</a></li>
+                <li>
+                    <a href="#2%e7%8e%af%e5%a2%83%e5%8f%98%e9%87%8f%e7%9a%84%e8%ae%be%e7%bd%ae" aria-label="2、环境变量的设置">2、环境变量的设置</a></li>
+                <li>
+                    <a href="#3ini%e6%96%87%e4%bb%b6%e7%9a%84%e5%8f%aa%e8%af%bb%e5%b1%9e%e6%80%a7%e8%a6%81%e8%bf%9b%e8%a1%8c%e4%bf%ae%e6%94%b9%e5%90%8c%e6%97%b6%e4%b8%8d%e8%a6%81%e4%bf%ae%e6%94%b9voltflow1%e8%bf%99%e4%b8%aa%e5%91%bd%e4%bb%a4%e6%96%b0%e7%89%88%e7%9a%84modelsim%e5%b7%b2%e7%bb%8f%e6%9c%89%e6%89%80%e6%94%b9%e6%ad%a3" aria-label="3、ini文件的只读属性要进行修改，同时不要修改voltflow=1这个命令，新版的modelsim已经有所改正">3、ini文件的只读属性要进行修改，同时不要修改voltflow=1这个命令，新版的modelsim已经有所改正</a></li></ul>
+                </li>
+                <li>
+                    <a href="#3%e6%8a%8a%e7%94%9f%e6%88%90%e7%9a%84%e5%ba%93%e6%b0%b8%e4%b9%85%e7%9a%84%e8%b0%83%e7%94%a8%e5%9c%a8modelsim%e8%bd%af%e4%bb%b6%e4%b8%ad" aria-label="3、把生成的库永久的调用在modelsim软件中">3、把生成的库永久的调用在modelsim软件中</a></li>
+                <li>
+                    <a href="#%e4%b8%89%e6%90%ad%e9%85%8d%e4%bd%bf%e7%94%a8" aria-label="三、搭配使用">三、搭配使用</a></li>
+                <li>
+                    <a href="#%e5%9b%9b%e5%9c%a8modelsim%e4%b8%ad%e7%8b%ac%e7%ab%8b%e4%bb%bf%e7%9c%9f" aria-label="四、在modelsim中独立仿真">四、在modelsim中独立仿真</a></li>
+                <li>
+                    <a href="#%e4%ba%94do%e8%af%ad%e8%a8%80%e8%84%9a%e6%9c%ac%e6%9c%aa%e5%ae%8c%e5%be%85%e7%bb%ad" aria-label="五、do语言脚本（未完待续">五、do语言脚本（未完待续</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content">
+  <h2 id="modelsim-仿真环境搭建">modelsim 仿真环境搭建</h2>
+<h3 id="一软件下载">一、软件下载</h3>
+<p>modelsim 2020.1+vivado 2021.2 环境搭建在此不做说明</p>
+<p>要注意，十分注意软件的配套问题!在amd官网可以看到不同版本的vivado支持的三方仿真版本是什么。</p>
+<p>直接搜vivado suit 在UG973里面可以看到各个版本对应的，我最开始随便下的modelsim 10.4编译vivado 2021的时候就不断报错。</p>
+<p><a href="https://lxzzzzzxl.github.io/2019/01/22/Modelsim%20%E7%A0%B4%E8%A7%A3%20%E6%B3%A8%E5%86%8C/">指路：modelsim破解教程</a></p>
+<h3 id="二编译xilinx相关的库-以及调用">二、编译xilinx相关的库 以及调用</h3>
+<p>主要仿真难点就在于，怎么在modelsim中调用xilinx给提供的ip核。所以需要对其中的核进行编译，让modelsim可以调用。在这里有很多坑：</p>
+<h4 id="1版本对应问题">1、版本对应问题</h4>
+<p>我使用modelsim 2020.1+vivado 2021.2 ，具体对应支持去amd官网上找一下。</p>
+<h4 id="2环境变量的设置">2、环境变量的设置</h4>
+<p>在对modelsim进行破解以后，设置两个环境变量。</p>
+<p>分别是用户变量：</p>
+<p>MODELSIM 对应地址是modelsim.ini文件所在位置</p>
+<p>系统变量：</p>
+<p>MGLS_LICENSE_FILE 对应位置是LICENSE.TXT破解文件位置。</p>
+<h4 id="3ini文件的只读属性要进行修改同时不要修改voltflow1这个命令新版的modelsim已经有所改正">3、ini文件的只读属性要进行修改，同时不要修改voltflow=1这个命令，新版的modelsim已经有所改正</h4>
+<h3 id="3把生成的库永久的调用在modelsim软件中">3、把生成的库永久的调用在modelsim软件中</h3>
+<p>启动软件后，下方library栏可以看到，一些支持的库和ip，我们需要把生成的新的ip配置到modelsim中，让每次打开都能看到xilinx内的所有核。</p>
+<p><a href="https://blog.csdn.net/flypassion/article/details/100057912">指路：modelsim调库教程</a></p>
+<h3 id="三搭配使用">三、搭配使用</h3>
+<p>有两种方式：</p>
+<p>1、在vivado内搭建工程，并且调用modelsim的仿真引擎。使用更方便，和在vivado内仿真内没有太大差别。但是效果一般。</p>
+<p>2、使用modelsim独立仿真，在modelsim里面搭建工程，调用v文件，在没有用ip核的时候也很方便，但是使用到xilinx的ip就比较复杂。不过可以使用脚本语言加快进程。本文将用第二种方式。</p>
+<h3 id="四在modelsim中独立仿真">四、在modelsim中独立仿真</h3>
+<p>依然是在vivado内写好模块代码，激励文件，同时可以看RTL级电路实现结果。在modelsim中新建工程，新建工作库work，并且把所有的代码都add到工作区内。</p>
+<p>在project栏里，右键V代码，选择compile all,进行编译，这个时候就可以看到编译结果有没有问题。编译通过后选择library栏，打开work库，选择tb文件，右键simulate，可以看到module仿真后的结果，再次右键add wave就可以调试啦。</p>
+<p>每次有代码更改后，都需要重新编译,restart一下，然后再次仿真。</p>
+<p><a href="http://gr.xjtu.edu.cn/c/document_library/get_file?p_l_id=1736655&amp;folderId=1736731&amp;name=DLFE-18907.pdf">指路：西交的modelsim简易使用教程</a></p>
+<h3 id="五do语言脚本未完待续">五、do语言脚本（未完待续</h3>
+
+  </div>
+
+  <footer class="post-footer">
+
+<div class="share-buttons">
+
+    <a target="_blank" rel="noopener noreferrer" aria-label="share modelsim独立仿真 on linkedin"
+        href="https://www.linkedin.com/in/heycharlola/">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+        </svg>
+    </a>
+</div>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span> built with ♥ from charlola
+      
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = 'copy';
+
+        function copyingDone() {
+            copybutton.innerText = 'copied!';
+            setTimeout(() => {
+                copybutton.innerText = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
